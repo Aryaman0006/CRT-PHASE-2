@@ -1,0 +1,25 @@
+class Solution 
+{
+public:
+    int findPeakElement(vector<int>& nums) 
+    {
+        int left = 0;
+        int right = nums.size() - 1; // 1. Sets the upper boundary
+
+        while (left < right) // 2. FIXED: Keeps loop from running infinitely
+        {
+            int mid = left + (right - left) / 2;
+            
+            // 3. SAFE: mid+1 is always valid because left < right guarantees mid < right
+            if (nums[mid] < nums[mid + 1])
+            {
+                left = mid + 1; // Peak must be on the right side
+            }
+            else
+            {
+                right = mid; // mid could be the peak, shrink the window to the left
+            }  
+        }
+        return left; // left and right meet at the peak element
+    }
+};
